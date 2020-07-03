@@ -8,13 +8,13 @@ namespace rubySchoolStuff
 {
     class Program
     {
-        Range range = new Range();
-        Arrays arrays = new Arrays();
-        StringParse stringParse = new StringParse();
+        Range range = new Range();                                              // New better basics Range
+        Arrays arrays = new Arrays();                                           // New better bascis Array
+        StringParse stringParse = new StringParse();                            // New String Parser from better basics
 
         // Averages
-        static void dataAverages()
-        {
+        static void dataAverages()                                              // This handles big datasets and just has a few things to parse data from it
+        {           
             double current_data;
             string to_exit = "";
             bool done = true;
@@ -24,11 +24,11 @@ namespace rubySchoolStuff
             Console.Write("Input: ");
 
             to_exit = Console.ReadLine();
-            done = double.TryParse(to_exit, out current_data);
+            done = double.TryParse(to_exit, out current_data);                  // First use of the better basics libary. This one has all the try parse in it and is self contained
 
-            while (done)
+            while (done)                                                        // Will loop thru until a blank line is found
             {
-                data = Arrays.Add(current_data, data);
+                data = Arrays.Add(current_data, data);                          // Arrays.add is also a better basics thing. Instead of using a list you can use array and it will make a new array size of + 1
                 Console.Write("Input: ");
                 to_exit = Console.ReadLine();
                 done = double.TryParse(to_exit, out current_data);
@@ -42,19 +42,19 @@ namespace rubySchoolStuff
         {
             int choice;
             bool exit = false;
-            string[] options = { "List all Data", "Find Average", "Find all unique", "Find all Specific", "New Dataset", "Import Dataset" ,"Exit" };
+            string[] options = { "List all Data", "Find Average", "Find all unique", "Find all Specific", "New Dataset", "Import Dataset" ,"Exit" }; 
 
             Console.WriteLine("What do you want to do with the data set?");
 
             for (int i = 0; i < options.Length; i++)
             {
                 Console.WriteLine("{0}: {1}", i + 1, options[i]);
-            }
-
+            }                                                                       
+                                                                                // This just lists the menu options
             Console.Write("Data: ");
             choice = StringParse.Int();
 
-            switch (choice)
+            switch (choice)                                                     //  Just picks the correct function to run
             {
                 case 1:
                     Console.Clear();
@@ -97,9 +97,9 @@ namespace rubySchoolStuff
                 averagesMenu(data);
             }   
 
-        }
+        }                              // Holds all the menu options for data handler
 
-        static void listAllData(double[] data)
+        static void listAllData(double[] data)                                  // For loop that loops thru an array, thats it
         {
             for (int i = 0; i < data.Length; i++)
             {
@@ -119,7 +119,7 @@ namespace rubySchoolStuff
 
             Console.WriteLine("Average of the data is: {0}", arraySum / arrLength);
 
-        }
+        }                               // Loops thru the array and divides total by arr length
 
         static void listUniq(double[] data)
         {
@@ -139,7 +139,7 @@ namespace rubySchoolStuff
 
             Console.ReadKey();
 
-        }
+        }                                  // Uses the list Distinct call and displays all of it
 
         static void findValue(double[] data)
         {
@@ -166,9 +166,9 @@ namespace rubySchoolStuff
 
             Console.WriteLine();
 
-        }
+        }                                 // Loops thru the array and checks for the given double. Returns position of array if found
 
-        static double[] importFile()
+        static double[] importFile()                                            // Uses SystemIO to take a file path, writes it to a list, and converts that list to a double[]
         {
 
             string file_path;
@@ -225,7 +225,7 @@ namespace rubySchoolStuff
             ,regular_wage
             ,total_amount
             );
-        }
+        }                                            // Calculates overtime pay based on hours and given payrate 
 
         // Book Thing
         static void howManyBooks()
@@ -251,7 +251,7 @@ namespace rubySchoolStuff
             Console.WriteLine("Without the discount your total would have been {0}", (total_cost).ToString("$0.00"));
             Console.WriteLine("You saved {0} from your discount.", (total_cost_discounted).ToString("$0.00"));
 
-        }
+        }                                           // Calculates a discount rate and discount amount based on number of books bought
 
         static double discountDecider(int book_num)
         {
@@ -280,7 +280,7 @@ namespace rubySchoolStuff
 
 
             return final_discount;
-        }
+        }                          // Uses if statements with ranges to check discount rate
 
         // Package Weight 
         static void runPackagePrice()
@@ -293,7 +293,7 @@ namespace rubySchoolStuff
 
             Console.WriteLine("Package cost per pound is ${0}", cost_per_pound.ToString("#.00"));
             Console.WriteLine("The shipping cost is going to be ${0}", (cost_per_pound * package_weight).ToString("#.00"));
-        }
+        }                                        // Shipping cost given weight and price per pound of package
 
         static double getCostPerPound(double weight)
         { 
@@ -314,7 +314,7 @@ namespace rubySchoolStuff
             {
                 return 3.80;
             }
-        }
+        }                         // More range practice
 
         static double getPackWeight()
         {
@@ -325,7 +325,7 @@ namespace rubySchoolStuff
             number = StringParse.Double();
             
             return number;  
-        } 
+        }                                        // Grabs a double of package weight
 
         // Temperature Array
         static void tempPushArray()
@@ -343,7 +343,7 @@ namespace rubySchoolStuff
             }
 
             Console.WriteLine("Average Temp was {0} degrees Fahrenheit", (average_temperature / months.Length).ToString("0.00"));
-        }
+        }                                          // Calculates temperature based on user input for all the months
 
         static double getTemp(string month)
         {
@@ -354,7 +354,7 @@ namespace rubySchoolStuff
             temp = StringParse.Double();
 
             return temp;
-        }
+        }                                  // Grabs a double and returns it
 
         //Display Menu
         static void displayAndGrabMenuOption()
@@ -395,7 +395,7 @@ namespace rubySchoolStuff
             Console.Clear();
 
             lst[method_to_run - 1]();
-        }
+        }                               // Holds the method calls and menu options
 
         // Main
         static void Main(string[] args)
@@ -410,6 +410,6 @@ namespace rubySchoolStuff
 
             Main(args);
 
-        }
+        }                                      // Literally only serves to call the displayAndGrabMenuOption
     }
 }
