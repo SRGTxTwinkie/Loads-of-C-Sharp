@@ -12,9 +12,93 @@ namespace rubySchoolStuff
         Arrays arrays = new Arrays();                                           // New better bascis Array
         StringParse stringParse = new StringParse();                            // New String Parser from better basics
 
-        // Averages
-        static void dataAverages()                                              // This handles big datasets and just has a few things to parse data from it
-        {           
+        // String Handling
+        static void stringHandling()
+        {
+            Console.Clear();
+
+            string current_string = "a";
+            List<string> data = new List<string>();
+
+            Console.WriteLine("Enter strings, enter -1 to go to the options menu");
+
+            while (StringParse.IntVarParse(current_string) != -1)
+            {
+                Console.Write("Input: ");
+                current_string = Console.ReadLine();
+
+                if (StringParse.IntVarParse(current_string) == -1)
+                {
+                    stringHandleMenu(data);
+                }
+                else
+                {
+                    data.Add(current_string);
+                }
+            }
+
+        }
+
+        static void stringHandleMenu(List<string> data)
+        {
+            Console.Clear();
+
+            int menu_option_position;
+            bool exit = false;
+            string[] menu_titles = { "Find Entry" };
+
+            foreach(string i in menu_titles)
+            {
+                Console.WriteLine("{0}: {1}", i.IndexOf(i) + 1, i);
+            }
+
+            menu_option_position = StringParse.Int("Command Option [1/" + menu_titles.Length + "]");
+
+            switch (menu_option_position)
+            {
+                case 1:
+                    findEntry(data);
+                    break;
+                case 6:
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Command not recognized");
+                    break;
+            }
+
+            if(!exit)
+            {
+                stringHandleMenu(data);
+            }
+           
+        }
+
+        static void findEntry(List<string> data)
+        {
+            string to_find;
+
+            Console.Write("Enter a string to search for it: ");
+            to_find = Console.ReadLine();
+
+            Console.Write("{0} found at position(s): ", to_find);
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i].Equals(to_find))
+                {
+                    Console.Write("|{0}| ", i);
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        // Number Handling
+        static void intHandling()                                              // This handles big datasets and just has a few things to parse data from it
+        {
             double current_data;
             string to_exit = "";
             bool done = true;
@@ -34,23 +118,23 @@ namespace rubySchoolStuff
                 done = double.TryParse(to_exit, out current_data);
             }
 
-            averagesMenu(data);
+            intHandleMenu(data);
 
         }
-
-        static void averagesMenu(double[] data)
+        
+        static void intHandleMenu(double[] data)
         {
             int choice;
             bool exit = false;
-            string[] options = { "List all Data", "Find Average", "Find all unique", "Find all Specific", "New Dataset", "Import Dataset" ,"Exit" }; 
+            string[] options = { "List all Data", "Find Average", "Find all unique", "Find all Specific", "New Dataset", "Import Dataset", "Exit" };
 
             Console.WriteLine("What do you want to do with the data set?");
 
             for (int i = 0; i < options.Length; i++)
             {
                 Console.WriteLine("{0}: {1}", i + 1, options[i]);
-            }                                                                       
-                                                                                // This just lists the menu options
+            }
+            // This just lists the menu options
             Console.Write("Data: ");
             choice = StringParse.Int();
 
@@ -74,11 +158,11 @@ namespace rubySchoolStuff
                     break;
                 case 5:
                     Console.Clear();
-                    dataAverages();
+                    intHandling();
                     break;
                 case 6:
                     Console.Clear();
-                    averagesMenu(importFile());
+                    intHandleMenu(importFile());
                     break;
                 case 7:
                     Console.Clear();
@@ -94,8 +178,8 @@ namespace rubySchoolStuff
 
             if (!exit)
             {
-                averagesMenu(data);
-            }   
+                intHandleMenu(data);
+            }
 
         }                              // Holds all the menu options for data handler
 
@@ -106,15 +190,15 @@ namespace rubySchoolStuff
                 Console.WriteLine("Data point {0}: {1}", i + 1, data[i]);
             }
         }
-        
+
         static void findAverage(double[] data)
         {
             double arraySum = 0;
             int arrLength = data.Length;
 
-            for(int i = 0; i < arrLength; i++)
+            for (int i = 0; i < arrLength; i++)
             {
-                arraySum += data[i]; 
+                arraySum += data[i];
             }
 
             Console.WriteLine("Average of the data is: {0}", arraySum / arrLength);
@@ -150,16 +234,16 @@ namespace rubySchoolStuff
             Console.WriteLine("Enter the digit you want to find. Will return all instances of value and place in array.");
             arr_value = StringParse.Int("Value");
 
-            for(int i = 0; i < data.Length; i++)
+            for (int i = 0; i < data.Length; i++)
             {
-                if(data[i] == arr_value)
+                if (data[i] == arr_value)
                 {
                     positions.Add(i);
                 }
             }
 
             Console.Write("{0} was found at positon(s): ", arr_value);
-            foreach(int i in positions)
+            foreach (int i in positions)
             {
                 Console.Write(" |{0}| ", i);
             }
@@ -180,7 +264,7 @@ namespace rubySchoolStuff
             file_path = Console.ReadLine();
             text = File.ReadAllLines(file_path).ToList();
 
-            foreach(string i in text)
+            foreach (string i in text)
             {
                 convertedArr.Add(Double.Parse(i));
             }
@@ -219,11 +303,11 @@ namespace rubySchoolStuff
 
             Console.WriteLine(
             "Total overtime payed this week is {0} \n" +
-            "Total non-overtime payed this week is {1} \n" + 
+            "Total non-overtime payed this week is {1} \n" +
             "Total amount earned this week is {2}"
-            ,overtime_payed
-            ,regular_wage
-            ,total_amount
+            , overtime_payed
+            , regular_wage
+            , total_amount
             );
         }                                            // Calculates overtime pay based on hours and given payrate 
 
@@ -245,7 +329,7 @@ namespace rubySchoolStuff
             discount = discountDecider(book_num);
             total_cost = book_num * book_price;
             total_cost_discounted = total_cost * discount;
-            
+
             Console.WriteLine("You have received a discount of {0} off!", (discount).ToString("0%"));
             Console.WriteLine("Your total is {0}", (total_cost - discount).ToString("$0.00"));
             Console.WriteLine("Without the discount your total would have been {0}", (total_cost).ToString("$0.00"));
@@ -296,15 +380,15 @@ namespace rubySchoolStuff
         }                                        // Shipping cost given weight and price per pound of package
 
         static double getCostPerPound(double weight)
-        { 
+        {
 
-            if(weight == 1)
+            if (weight == 1)
             {
                 return 1.10;
             }
             else if (Arrays.InArray(Range.NewRange(2, 6, 1), (int)weight))
             {
-                return 2.20;      
+                return 2.20;
             }
             else if (Arrays.InArray(Range.NewRange(7, 10, 1), (int)weight))
             {
@@ -323,8 +407,8 @@ namespace rubySchoolStuff
             Console.Write("Enter the package weight: ");
 
             number = StringParse.Double();
-            
-            return number;  
+
+            return number;
         }                                        // Grabs a double of package weight
 
         // Temperature Array
@@ -365,14 +449,12 @@ namespace rubySchoolStuff
             Making sure that the user input is a number was more work.
             */
 
-            List<Action> lst = new List<Action>(); // Makes a new list to hold the functions
-
             int method_to_run;
-            string input;
-            bool is_int;
-            
-            string[] list_options = { "Package price finder", "Temperature to array", "Book Discounts", "Overtime Calculator", "Average Data" }; // Names of Menu options
-            lst.AddRange(new Action[] { runPackagePrice, tempPushArray, howManyBooks, hoursWorked, dataAverages }); // Adds functions to the lists
+
+            string[] list_options = { "Package price finder", "Temperature to array", "Book Discounts", "Overtime Calculator", "Lots of Numbers", "Lots of Strings" }; // Names of Menu options
+            List<Action> functionList = new List<Action>(); // Makes a new list to hold the functions
+            functionList.AddRange(new Action[] { runPackagePrice, tempPushArray, howManyBooks, hoursWorked, intHandling, stringHandling }); // Adds functions to the lists
+
 
             // Loops thru menu options
             for (int i = 0; i < list_options.Length; i++)
@@ -380,21 +462,12 @@ namespace rubySchoolStuff
                 Console.WriteLine("{0}: {1}", i + 1, list_options[i]);
             }
 
-            Console.Write("Pick an option from 1 to {0}: ", list_options.Length);
+            method_to_run = StringParse.Int("Pick an option from 1 to " + list_options.Length);
 
-            input = Console.ReadLine();
-            is_int = int.TryParse(input, out method_to_run);
-
-            // Loops thru function list and calls given number
-            while (!is_int)
-            {
-                input = Console.ReadLine();
-                is_int = int.TryParse(input, out method_to_run);
-            }
+            functionList[method_to_run - 1]();
 
             Console.Clear();
 
-            lst[method_to_run - 1]();
         }                               // Holds the method calls and menu options
 
         // Main
